@@ -1,0 +1,217 @@
+image: cirrusci/flutter:stable
+
+stages:
+  - test
+  - build
+  - deploy
+
+.before_script_template: &mobileBeforeScript
+  before_script:
+    - sh .setup_app.sh
+    - flutter pub global activate pubspec_version
+    - FLUTTER_VERSION=`flutter pub global run pubspec_version:pubver get`
+    - export BUILD_VERSION=$(echo $FLUTTER_VERSION | cut -d "+" -f1)
+    - export BUILD_NUMBER=$(echo $FLUTTER_VERSION | cut -d "+" -f2)
+    - echo Build Version $BUILD_VERSION
+    - echo Build Number $BUILD_NUMBER
+
+test:
+  stage: test
+  #  when: manual
+  tags:
+    - macmini-2014
+  cache:
+    - key: ${CI_COMMIT_REF_SLUG}_pub-cache
+      paths:
+        - $CI_PROJECT_DIR/.pub-cache/
+    - key: ${CI_COMMIT_REF_SLUG}_generate-files
+      paths:
+        - $CI_PROJECT_DIR/lib/**/*.g.dart
+    - key: ${CI_COMMIT_REF_SLUG}_gen
+      paths:
+        - $CI_PROJECT_DIR/lib/gen/
+    - key: ${CI_COMMIT_REF_SLUG}_localization
+      paths:
+        - $CI_PROJECT_DIR/resources/
+
+  <<: *mobileBeforeScript
+
+  script:
+    - flutter format . --set-exit-if-changed
+    - flutter analyze
+  only:
+    - /^bugfix/.*$/
+    - /^feature/.*$/
+    - /^hotfix/.*$/
+    - /^update/.*$/
+    - develop
+
+diawi_android_dev: #Job name
+  stage: build # kind of job
+  when: manual
+  allow_failure: true #Make to skip build step and deploy step
+  needs: [ test ]
+  cache:
+    - key: ${CI_COMMIT_REF_SLUG}_pub-cache
+      paths:
+        - $CI_PROJECT_DIR/.pub-cache/
+    - key: ${CI_COMMIT_REF_SLUG}_generate-files
+      paths:
+        - $CI_PROJECT_DIR/lib/**/*.g.dart
+    - key: ${CI_COMMIT_REF_SLUG}_gen
+      paths:
+        - $CI_PROJECT_DIR/lib/gen/
+    - key: ${CI_COMMIT_REF_SLUG}_localization
+      paths:
+        - $CI_PROJECT_DIR/resources/
+
+  <<: *mobileBeforeScript
+
+  script:
+    - sh .setup_env_gradle.sh
+    - export BUILD_FLAVOR="Dev"
+    - export BUILD_FLAVOR_KEY="dev"
+    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh .setup_fastlane.sh
+#    - sh .build_android.sh $BUILD_FLAVOR_KEY
+    - bundle exec fastlane buildAndroid --env $BUILD_FLAVOR_KEY
+
+  tags:
+    - macmini-2014
+  only:
+    - /^bugfix/.*$/
+    - /^feature/.*$/
+    - /^hotfix/.*$/
+    - /^update/.*$/
+    - develop
+
+diawi_android_staging: #Job name
+  stage: build # kind of job
+  when: manual
+  allow_failure: true #Make to skip build step and deploy step
+  needs: [ test ]
+  cache:
+    - key: ${CI_COMMIT_REF_SLUG}_pub-cache
+      paths:
+        - $CI_PROJECT_DIR/.pub-cache/
+    - key: ${CI_COMMIT_REF_SLUG}_generate-files
+      paths:
+        - $CI_PROJECT_DIR/lib/**/*.g.dart
+    - key: ${CI_COMMIT_REF_SLUG}_gen
+      paths:
+        - $CI_PROJECT_DIR/lib/gen/
+    - key: ${CI_COMMIT_REF_SLUG}_localization
+      paths:
+        - $CI_PROJECT_DIR/resources/
+
+  <<: *mobileBeforeScript
+
+  script:
+    # These step is set-up for distribute to slack app and google chat
+    - sh .setup_env_gradle.sh
+    - export BUILD_FLAVOR="Staging"
+    - export BUILD_FLAVOR_KEY="staging"
+    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh .setup_fastlane.sh
+    - bundle exec fastlane buildAndroid --env $BUILD_FLAVOR_KEY
+
+  artifacts:
+    paths:
+      - build/app/outputs/flutter-apk/app-stag-release.apk
+  tags:
+    - macmini-2014
+  only:
+    - /^bugfix/.*$/
+    - /^feature/.*$/
+    - /^hotfix/.*$/
+    - /^update/.*$/
+    - develop
+
+firebase_android_staging:
+  stage: deploy
+  when: manual
+  needs: [ diawi_android_staging ]
+  dependencies:
+    - diawi_android_staging
+  script:
+    - export BUILD_FLAVOR_KEY="staging"
+    - sh .setup_fastlane.sh
+    - bundle exec fastlane distribute --env $BUILD_FLAVOR_KEY
+  tags:
+    - macmini-2014
+  only:
+    - /^release/.*$/
+    - /^update/.*$/
+    - /^hotfix/.*$/
+
+diawi_ios_dev: #Job name
+  stage: build # kind of job
+  when: manual
+  allow_failure: true #Make to skip build step and deploy step
+  needs: [ test ]
+  cache:
+    - key: ${CI_COMMIT_REF_SLUG}_pub-cache
+      paths:
+        - $CI_PROJECT_DIR/.pub-cache/
+    - key: ${CI_COMMIT_REF_SLUG}_generate-files
+      paths:
+        - $CI_PROJECT_DIR/lib/**/*.g.dart
+    - key: ${CI_COMMIT_REF_SLUG}_gen
+      paths:
+        - $CI_PROJECT_DIR/lib/gen/
+    - key: ${CI_COMMIT_REF_SLUG}_localization
+      paths:
+        - $CI_PROJECT_DIR/resources/
+
+  <<: *mobileBeforeScript
+
+  script:
+    - export BUILD_FLAVOR="Dev"
+    - export BUILD_FLAVOR_KEY="dev"
+    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh .setup_fastlane.sh
+    - bundle exec fastlane ios buildIOS --env $BUILD_FLAVOR_KEY --verbose
+
+  tags:
+    - macmini-2014
+  only:
+    - /^bugfix/.*$/
+    - /^feature/.*$/
+    - /^hotfix/.*$/
+    - /^update/.*$/
+    - develop
+
+testflight_staging: #Job name
+  stage: build # kind of job
+  when: manual
+  allow_failure: true #Make to skip build step and deploy step
+  needs: [ test ]
+  cache:
+    - key: ${CI_COMMIT_REF_SLUG}_pub-cache
+      paths:
+        - $CI_PROJECT_DIR/.pub-cache/
+    - key: ${CI_COMMIT_REF_SLUG}_generate-files
+      paths:
+        - $CI_PROJECT_DIR/lib/**/*.g.dart
+    - key: ${CI_COMMIT_REF_SLUG}_gen
+      paths:
+        - $CI_PROJECT_DIR/lib/gen/
+    - key: ${CI_COMMIT_REF_SLUG}_localization
+      paths:
+        - $CI_PROJECT_DIR/resources/
+
+  <<: *mobileBeforeScript
+
+  script:
+    - export BUILD_FLAVOR="Staging"
+    - export BUILD_FLAVOR_KEY="staging"
+    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh .setup_fastlane.sh
+    - bundle exec fastlane ios testFlightDistribute --env $BUILD_FLAVOR_KEY --verbose
+
+  tags:
+    - macmini-2014
+  only:
+    - /^release/.*$/
+    - /^hotfix/.*$/
+    - /^update/.*$/

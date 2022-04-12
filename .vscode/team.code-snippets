@@ -1,0 +1,58 @@
+{
+	// Place your snippets for dart here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"Try Impl": {
+		"prefix": "tryimpl",
+		"body": [
+			"try {",
+			"final _result = await _api.$1($2);",
+			"return _result;",
+			"} on DioError catch (e) {",
+			"throw ApiException(exception: e);",
+			"} catch (e) {",
+			" throw Exception(e);}",
+		]
+	},
+	"Try bloc": {
+		"prefix": "trybloc",
+		"body": [
+			"try {",
+			"emit($1);",
+			"$2;",
+			"emit($3);",
+			"} on ApiException catch (e) {",
+			"emit($4(e.displayError));",
+			"} catch (e) {",
+			"emit($4(e.toString()));}",
+		]
+	},
+	"Factory Json Object": {
+		"prefix": "facjson",
+		"body": [
+			"factory $1.fromJson(Map<String, dynamic> json) => _$$1FromJson(json);",
+			"Map<String, dynamic> toJson() => _$$1ToJson(this);",
+		]
+	},
+	"Bloc build when": {
+		"prefix": "buildwhen",
+		"body": [
+			"buildWhen: (_, _cur) => _cur is $1,"
+		],
+	},
+	"State Classes": {
+		"prefix": "classState",
+		"body": [
+			"class $1LoadingState extends $2{}",
+			"class $1LoadedState extends $2{}",
+			"class $1ErrorState extends $2{",
+			"final String errMessage;",
+			"const $1ErrorState(this.errMessage);",
+			"@override",
+			"List<Object> get props => [errMessage];",
+			"}",
+		]
+	}
+}

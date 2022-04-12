@@ -1,0 +1,127 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https: //docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+# https: //docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+# https: //docs.fastlane.tools/plugins/available-plugins
+#
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+default_platform(:android)
+FLAVOR = ENV["FLAVOR"]
+PREFIX = ENV["PREFIX"]
+USER_PERFORM = ENV["USER_PERFORM"]
+NAME_BRANCH = ENV["BRANCH_NAME"]
+COMMIT_TITLE = ENV["COMMIT_TITLE"]
+APP_NAME = ENV["APP_ANDROID_NAME"]
+BUILD_PATH_DEFAULT = "build/app/outputs/flutter-apk/app-#{PREFIX}-release.apk"
+BUILD_IOS_PATH = "build/ios"
+ARCHIVE_IOS_PATH = "build/ios#{APP_NAME}.ipa"
+GRADLE_PATH = 'android/'
+CHANGELOG = File.read("../release-note.txt")
+# These lane without platform is using for sharing lane
+desc "Upload build #{FLAVOR} to Diawi and Send to Google Chat"
+private_lane :uploadDiawiAndGoogleChat do |values|
+	filePath = values[:filePath]
+	platform = values[:platform]
+	puts filePath
+	puts platform
+	diawi(token: ENV['DIAWI_TOKEN'], file: "#{filePath}")
+	google_chat(
+		webhook: ENV['GOOGLE_CHAT_URL'],
+		title: "Build #{platform} #{FLAVOR}",
+		description: "Perform by #{USER_PERFORM}",
+		buttonTitle: "DOWNLOAD #{APP_NAME}",
+		section1Title: "Branch #{NAME_BRANCH}",
+		section1Description: "Commit #{COMMIT_TITLE}",
+		buttonUrl: lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI],
+		imageUrl: ENV['IMAGE_URL']
+	)
+end
+platform :android do
+	desc "Build Android Version Version #{FLAVOR}"
+	lane :buildAndroid do
+		gradle(task: "clean assemble#{FLAVOR}Release", project_dir: GRADLE_PATH)
+		puts "Finish build"
+		uploadDiawiAndGoogleChat(
+			filePath: "#{BUILD_PATH_DEFAULT}",
+			platform: "Android",
+		)
+	end
+
+    desc "Send Build Android #{FLAVOR}"
+	lane :uploadBuildAndroid do
+		uploadDiawiAndGoogleChat(
+			filePath: "#{BUILD_PATH_DEFAULT}",
+			platform: "Android",
+		)
+	end
+
+	desc "Distribute To Firebase"
+	lane :distribute do
+		firebase_app_distribution(
+			app: ENV['FIREBASE_APP_ID'],
+			groups: "testers",
+			apk_path: "#{BUILD_PATH_DEFAULT}",
+			firebase_cli_token: ENV['FIREBASE_TOKEN']
+		)
+	end
+end
+
+platform :ios do
+	desc "Build app #{PREFIX} ios"
+	lane :buildIOS do
+		cocoapods(
+			podfile: "ios/Podfile",
+			silent: true,
+		)
+		getProvisionAndCertificate
+		build_app(workspace: "ios/Runner.xcworkspace", scheme: "#{PREFIX}",
+			output_directory: "#{BUILD_IOS_PATH}",
+			output_name: "#{APP_NAME}",
+			export_method: "ad-hoc",
+			silent: true,
+			codesigning_identity: ENV["CODE_SIGNING"],
+			export_options: {
+				provisioningProfiles: {
+					ENV["IOS_BUNDLE"] => ENV["PROVISION_NAME"],
+				}
+			}
+		)
+		puts "Finish build"
+		uploadDiawiAndGoogleChat(
+			filePath: "#{lane_context[SharedValues::IPA_OUTPUT_PATH]}",
+			platform: "IOS",
+		)
+	end
+
+	desc "TestFlight #{PREFIX} ios"
+	lane :testFlightDistribute do
+		buildIOS
+		puts "Change log get #{CHANGELOG}"
+		upload_to_testflight(
+			distribute_external: true,
+			groups: ["External"],
+			changelog: "#{CHANGELOG}"
+		)
+	end
+
+	desc "Get provision and certificate #{PREFIX} ios"
+	private_lane :getProvisionAndCertificate do
+		get_certificates(
+			generate_apple_certs: false,
+			filename: ENV["CER_FILE_NAME"],
+		)
+		get_provisioning_profile(
+			provisioning_name: ENV["PROVISION_NAME"],
+			app_identifier: ENV["IOS_BUNDLE"],
+			readonly: true,
+			adhoc: true,
+			ignore_profiles_with_different_name: true,
+		)
+	end
+end

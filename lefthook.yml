@@ -1,0 +1,10 @@
+# EXAMPLE USAGE
+# Refer for explanation to following link:
+# https://github.com/evilmartians/lefthook/blob/master/docs/full_guide.md
+#
+
+pre-commit:
+  commands:
+    pretty:
+      glob: '*.dart'
+      run: flutter format {staged_files} && git add {staged_files}

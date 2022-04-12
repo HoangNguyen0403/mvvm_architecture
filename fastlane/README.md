@@ -1,0 +1,77 @@
+fastlane documentation
+----
+
+# Installation
+
+Make sure you have the latest version of the Xcode command line tools installed:
+
+```sh
+xcode-select --install
+```
+
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
+
+# Available Actions
+
+## Android
+
+### android sendBuildToGoogleChat
+
+```sh
+[bundle exec] fastlane android sendBuildToGoogleChat
+```
+
+Send Build Android Version Dev
+
+### android buildAndroidLocal
+
+```sh
+[bundle exec] fastlane android buildAndroidLocal
+```
+
+Build Android Version Local
+
+### android distribute
+
+```sh
+[bundle exec] fastlane android distribute
+```
+
+Distribute To Firebase
+
+----
+
+
+## iOS
+
+### ios buildIOS
+
+```sh
+[bundle exec] fastlane ios buildIOS
+```
+
+Build app dev ios
+
+### ios testFlightDistribute
+
+```sh
+[bundle exec] fastlane ios testFlightDistribute
+```
+
+TestFlight dev ios
+
+### ios getProvision
+
+```sh
+[bundle exec] fastlane ios getProvision
+```
+
+Get provision dev ios
+
+----
+
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
+
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
+
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
