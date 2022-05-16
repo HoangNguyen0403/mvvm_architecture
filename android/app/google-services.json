@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "863569946908",
+    "project_id": "flutter-temp-clean",
+    "storage_bucket": "flutter-temp-clean.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863569946908:android:b89fa009e8dd77219372d9",
+        "android_client_info": {
+          "package_name": "com.vmo.c3FlutterTemp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmA9eDO9UMFFbvARBZfzCwdM2GI1ijo1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863569946908-bq1oqlvmjsl9r4v4ppfr7ecoppqgpqva.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vmo.c3FlutterTemp.staging"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863569946908:android:2bb3653912f7837a9372d9",
+        "android_client_info": {
+          "package_name": "com.vmo.c3FlutterTemp.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmA9eDO9UMFFbvARBZfzCwdM2GI1ijo1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863569946908-bq1oqlvmjsl9r4v4ppfr7ecoppqgpqva.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vmo.c3FlutterTemp.staging"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863569946908:android:96d7c73c950576f79372d9",
+        "android_client_info": {
+          "package_name": "com.vmo.c3FlutterTemp.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmA9eDO9UMFFbvARBZfzCwdM2GI1ijo1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863569946908-msu7pap375o5ph5veijbrpm22mjbfe5g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "863569946908-bq1oqlvmjsl9r4v4ppfr7ecoppqgpqva.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vmo.c3FlutterTemp.staging"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

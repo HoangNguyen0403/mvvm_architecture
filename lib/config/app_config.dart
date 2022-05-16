@@ -1,5 +1,12 @@
+import 'package:mvvm_architecture/firebase/firebase_options_staging.dart'
+    as staging;
+import 'package:mvvm_architecture/firebase/firebase_options_dev.dart' as dev;
+import 'package:mvvm_architecture/firebase/firebase_options.dart' as prod;
+
+import 'package:firebase_core/firebase_core.dart';
+
 enum AppFlavor {
-  development,
+  dev,
   staging,
   production,
 }
@@ -17,7 +24,7 @@ class AppConfig {
 
   static AppConfig devConfig = AppConfig(
     apiBaseUrl: 'https://your_api_dev_base_url/api/',
-    appFlavor: AppFlavor.development,
+    appFlavor: AppFlavor.dev,
   );
 
   static AppConfig stagingConfig = AppConfig(
@@ -29,6 +36,19 @@ class AppConfig {
     apiBaseUrl: 'https://your_api_production_base_url/api/',
     appFlavor: AppFlavor.production,
   );
+
+  FirebaseOptions get flavorFirebaseOption {
+    switch (_instance?.appFlavor) {
+      case AppFlavor.dev:
+        return dev.DefaultFirebaseOptions.currentPlatform;
+      case AppFlavor.staging:
+        return staging.DefaultFirebaseOptions.currentPlatform;
+      case AppFlavor.production:
+        return prod.DefaultFirebaseOptions.currentPlatform;
+      default:
+        return dev.DefaultFirebaseOptions.currentPlatform;
+    }
+  }
 
   static AppConfig? getInstance({flavorName}) {
     if (_instance == null) {

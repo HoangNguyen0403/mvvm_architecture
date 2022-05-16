@@ -31,10 +31,16 @@ void main() async {
 Future<void> _beforeRunApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await _flavor;
 
-  await Firebase.initializeApp();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  // Listen for flavor triggered by iOS / android build
+  await Firebase.initializeApp(
+    options: AppConfig.getInstance()!.flavorFirebaseOption,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  await setupInjection();
+}
+
+Future<void> get _flavor async {
   await const MethodChannel('flavor').invokeMethod<String>('getFlavor').then(
     (String? flavor) async {
       final appConfig = AppConfig.getInstance(flavorName: flavor);
@@ -47,8 +53,6 @@ Future<void> _beforeRunApp() async {
       log("Error when set up enviroment $error");
     },
   );
-
-  await setupInjection();
 }
 
 class MyApp extends StatefulWidget {
@@ -80,9 +84,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(400, 800),
-      builder: () => MaterialApp(
+      builder: (_) => MaterialApp(
         builder: (context, child) {
-          ScreenUtil.setContext(context);
           return child ?? const SizedBox();
         },
         title: 'Flutter Template',

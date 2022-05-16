@@ -34,7 +34,7 @@ apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -49,7 +49,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.hoangnh.flutter_temp"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -67,12 +67,12 @@ android {
             versionNameSuffix = "-dev"
             resValue "string", "app_name", "App Name Dev"
         }
-        stag {
+        staging {
             applicationIdSuffix ".staging"
             versionNameSuffix = "-staging"
             resValue "string", "app_name", "App Name Staging"
         }
-        prod {
+        production {
             versionNameSuffix = "-prod"
             resValue "string", "app_name", "App Name"
         }

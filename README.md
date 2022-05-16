@@ -8,11 +8,35 @@ https://fvm.app/docs/getting_started/installation
 
 ## Getting Started
 
-- Flutter version using : 2.10.3 (stable at 3/3/2022)
-- Dart version using : 2.16.1
+- Flutter version using : 3.0.0 (stable at 11/5/2022)
+- Dart version using : 2.17.0
+- DevTools version using : 2.12.2
 - Platform android : 31, Build-tools : 30.0.2
 - Java version OpenJDK 11.0.11+9
 - Gradle version 6.7.1
+
+### Configure Firebase Multi Flavor
+
+Step 1 : Install Firebase CLI with npm : "npm install -g firebase-tools"
+
+https://firebase.google.com/docs/cli#install-cli-mac-linux
+
+Step 2 : Login to firebase account : "firebase login"
+
+Step 3 : Install FlutterFire CLI with this command : "dart pub global activate flutterfire_cli"
+
+Step 4 : Configure multi flavor with: 
+
+Run command "flutterfire configure -i packageName -a packageName -o lib/firebase/firebase_options_{flavor}.dart" for each flavor. 
+Dev: "flutterfire configure -i com.vmo.c3FlutterTemp.dev -a com.vmo.c3FlutterTemp.dev -o lib/firebase/firebase_options_dev.dart"
+Staging: "flutterfire configure -i com.vmo.c3FlutterTemp.staging -a com.vmo.c3FlutterTemp.staging -o lib/firebase/firebase_options_staging.dart"
+Production: "flutterfire configure -i com.vmo.c3FlutterTemp -a com.vmo.c3FlutterTemp -o lib/firebase/firebase_options.dart"
+
+Other configure:
+xn
+![](flutter-fire-configure.png)
+
+Documentation at : https://firebase.google.com/docs/flutter/setup?platform=ios
 
 ### Configuration Environment Running
 
@@ -21,8 +45,8 @@ https://fvm.app/docs/getting_started/installation
 Step 2 : Create new Configuration with build flavor value is :
 
 + Develop Environment : dev
-+ Staging Environment : stag
-+ Production Environment : (No need flavor value)
++ Staging Environment : staging
++ Production Environment : production
 
 ### Command need to run before run app
 
