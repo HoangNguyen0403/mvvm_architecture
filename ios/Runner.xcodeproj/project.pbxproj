@@ -50,9 +50,6 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A695224D5BB19B6B948154E0 /* Pods-Runner.debug-staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-staging.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-staging.xcconfig"; sourceTree = "<group>"; };
 		B65B2424264CE93700EB7778 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
-		B6B88501261AA8A000E53873 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B6B88505261AA94700E53873 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B6DC3785261ABB3B0044E017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E19B00A12C3C72FF52BB4ABB /* Pods-Runner.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-production.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-production.xcconfig"; sourceTree = "<group>"; };
 		F10D895E6C7C4AAB1A09EC4D /* Pods-Runner.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-development.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-development.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +99,6 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				B61F87B12616D02100049E26 /* Firebase */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -114,40 +110,6 @@
 				B65B2424264CE93700EB7778 /* ExportOptions.plist */,
 			);
 			path = Runner;
-			sourceTree = "<group>";
-		};
-		B61F87B12616D02100049E26 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				B61F87B42616D03D00049E26 /* production */,
-				B61F87B32616D03600049E26 /* staging */,
-				B61F87B22616D02F00049E26 /* development */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
-		B61F87B22616D02F00049E26 /* development */ = {
-			isa = PBXGroup;
-			children = (
-				B6B88505261AA94700E53873 /* GoogleService-Info.plist */,
-			);
-			path = development;
-			sourceTree = "<group>";
-		};
-		B61F87B32616D03600049E26 /* staging */ = {
-			isa = PBXGroup;
-			children = (
-				B6B88501261AA8A000E53873 /* GoogleService-Info.plist */,
-			);
-			path = staging;
-			sourceTree = "<group>";
-		};
-		B61F87B42616D03D00049E26 /* production */ = {
-			isa = PBXGroup;
-			children = (
-				B6DC3785261ABB3B0044E017 /* GoogleService-Info.plist */,
-			);
-			path = production;
 			sourceTree = "<group>";
 		};
 		B74D374608EB23A222240BBB /* Pods */ = {
@@ -185,8 +147,6 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				B61F87BB2616D0C400049E26 /* Firebase Config */,
-				B6F5A154261AA4D40008B073 /* ShellScript */,
 				F5D59A36E7BD22FE713D6D56 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -274,43 +234,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
-		};
-		B61F87BB2616D0C400049E26 /* Firebase Config */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Firebase Config";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "PLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\nif [ \"${CONFIGURATION}\" == \"Debug-production\" ] || [ \"${CONFIGURATION}\" == \"Release-production\" ] || [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\ncp \"${PROJECT_DIR}/Runner/Firebase/production/GoogleService-Info.plist\" \"${PLIST_DESTINATION}\"\n\nelif [ \"${CONFIGURATION}\" == \"Debug-staging\" ] || [ \"${CONFIGURATION}\" == \"Release-staging\" ] || [ \"${CONFIGURATION}\" == \"Debug\" ]; then\n\ncp \"${PROJECT_DIR}/Runner/Firebase/staging/GoogleService-Info.plist\" \"${PLIST_DESTINATION}\"\n\nelif [ \"${CONFIGURATION}\" == \"Debug-development\" ] || [ \"${CONFIGURATION}\" == \"Release-development\" ] || [ \"${CONFIGURATION}\" == \"Debug\" ]; then\n\ncp \"${PROJECT_DIR}/Runner/Firebase/development/GoogleService-Info.plist\" \"${PLIST_DESTINATION}\"\n\nfi\n";
-		};
-		B6F5A154261AA4D40008B073 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		CD5B3F665FAFA2708D020FA4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -462,7 +385,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmo.c3FlutterTemp;
-				PRODUCT_FLAVOR = development;
+				PRODUCT_FLAVOR = dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "C3 Flutter Temp - Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -722,7 +645,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmo.c3FlutterTemp;
-				PRODUCT_FLAVOR = development;
+				PRODUCT_FLAVOR = dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "C3 Flutter Temp - AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

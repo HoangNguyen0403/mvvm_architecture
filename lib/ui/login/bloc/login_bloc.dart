@@ -12,7 +12,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc(this.loginUseCase) : super(LoginInitial()) {
     on<LoginPressed>(
-          (event, emit) async {
+      (event, emit) async {
         try {
           emit(LoginLoadingState());
           await loginUseCase.login(

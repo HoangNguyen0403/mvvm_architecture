@@ -54,6 +54,7 @@ pubspec.lock
 coverage/lcov.info
 /ios/build
 /resources/
+ios/Podfile.lock
 
 .firebase
 Gemfile.lock

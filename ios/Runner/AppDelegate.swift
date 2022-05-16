@@ -8,9 +8,6 @@ import Firebase
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    if #available(iOS 13.0, *) {
-       FirebaseApp.configure()
-     }
     let flavor = Bundle.main.infoDictionary?["Flavor"] as! String;
     print("Flavor : " + flavor);
 

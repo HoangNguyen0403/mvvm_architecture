@@ -9,6 +9,7 @@ analyzer:
 linter:
   rules:
     overridden_fields: false
-    prefer_const_constructors: true
     use_key_in_widget_constructors: false
-    avoid_function_literals_in_foreach_calls: false
+    library_private_types_in_public_api: false
+    depend_on_referenced_packages: false
+
