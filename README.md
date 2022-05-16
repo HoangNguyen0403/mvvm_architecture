@@ -35,8 +35,7 @@ Staging: "flutterfire configure -i com.vmo.c3FlutterTemp.staging -a com.vmo.c3Fl
 
 Production: "flutterfire configure -i com.vmo.c3FlutterTemp -a com.vmo.c3FlutterTemp -o lib/firebase/firebase_options.dart"
 
-Other configure:
-xn
+Other configure: 
 ![](flutter-fire-configure.png)
 
 Documentation at : https://firebase.google.com/docs/flutter/setup?platform=ios
