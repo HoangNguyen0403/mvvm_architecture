@@ -27,9 +27,12 @@ Step 3 : Install FlutterFire CLI with this command : "dart pub global activate f
 
 Step 4 : Configure multi flavor with: 
 
-Run command "flutterfire configure -i packageName -a packageName -o lib/firebase/firebase_options_{flavor}.dart" for each flavor. 
+Run command "flutterfire configure -i packageName -a packageName -o lib/firebase/firebase_options_{flavor}.dart" for each flavor.
+
 Dev: "flutterfire configure -i com.vmo.c3FlutterTemp.dev -a com.vmo.c3FlutterTemp.dev -o lib/firebase/firebase_options_dev.dart"
+
 Staging: "flutterfire configure -i com.vmo.c3FlutterTemp.staging -a com.vmo.c3FlutterTemp.staging -o lib/firebase/firebase_options_staging.dart"
+
 Production: "flutterfire configure -i com.vmo.c3FlutterTemp -a com.vmo.c3FlutterTemp -o lib/firebase/firebase_options.dart"
 
 Other configure:
