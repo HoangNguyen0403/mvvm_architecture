@@ -1,0 +1,16 @@
+{
+  "title": "Hello",
+  "msg": "Hello {userName} in the {} world",
+  "msg_named": "{} are written in the {lang} language",
+  "clickMe": "Click me",
+  "connectTimeout": "The connection has timed out. Please try again",
+  "receiveTimeout": "Receive timeout",
+  "sendTimeout": "Send timeout",
+  "pleaseCheckYourInternetConnection": "Please check your internet connection.",
+  "cancelled": "Cancelled",
+  "connectionProblem": "There are some problems with the connection. Please try again",
+  "addFriends": "Add Friends",
+  "message": "Message",
+  "more": "More",
+  "editProfile": "Edit Profile"
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Xin chào",
+  "msg": "Xin chào {userName} trong thế giới {}",
+  "msg_named": "{} được viết bằng tiếng {lang}",
+  "clickMe": "Bấm vào tôi",
+  "connectTimeout": "Thời gian kết nối đã quá giờ. Xin thử lại",
+  "receiveTimeout": "Thời gian nhận yêu cầu quá giờ",
+  "sendTimeout": "Thời gian gửi yêu cầu quá giờ",
+  "pleaseCheckYourInternetConnection": "Vui lòng kiểm tra lại kết nối mạng.",
+  "cancelled": "Huỷ bỏ",
+  "connectionProblem": "Có vấn đề với kết nối mạng. Vui long thử lại",
+  "addFriends": "Kết bạn",
+  "message": "Tin nhắn",
+  "more": "Thêm",
+  "editProfile": "Chỉnh sửa hồ sơ"
+}
