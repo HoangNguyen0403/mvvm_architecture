@@ -1,6 +1,6 @@
 GREEN='\033[1;32m'
 
-echo "${GREEN}========================Start Setup Fastlane======================="
+echo "${GREEN}========================Start Setup Fastlane Start======================="
 gem install bundler
 bundle install
-echo "========================Finish Setup Fastlane======================="
+echo "========================Setup Fastlane Finish======================="

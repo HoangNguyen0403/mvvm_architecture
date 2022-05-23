@@ -13,7 +13,7 @@ class TestWidgetWrapper extends StatelessWidget {
     return MaterialApp(
       home: ScreenUtilInit(
         designSize: const Size(400, 800),
-        builder: (_) => child,
+        builder: (_, __) => child,
       ),
     );
   }

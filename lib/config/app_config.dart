@@ -53,7 +53,7 @@ class AppConfig {
   static AppConfig? getInstance({flavorName}) {
     if (_instance == null) {
       switch (flavorName) {
-        case 'development':
+        case 'dev':
           {
             _instance = devConfig;
           }
