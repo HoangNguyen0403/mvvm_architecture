@@ -21,7 +21,8 @@ void main() async {
     EasyLocalization(
       supportedLocales: const [Locale('en', 'US'), Locale('vi', 'VN')],
       fallbackLocale: const Locale('en', 'US'),
-      path: 'resources/langs/langs.csv', //Using translations path if using json file
+      path:
+          'resources/langs/langs.csv', //Using translations path if using json file
       assetLoader: CsvAssetLoader(), //Remove this line if using json file
       child: MyApp(),
     ),
@@ -45,7 +46,7 @@ Future<void> get _flavor async {
       .invokeMethod<String>('getFlavor')
       .then((String? flavor) => AppConfig.getInstance(flavorName: flavor))
       .catchError(
-        (error) {
+    (error) {
       log("Error when set up enviroment: $error");
       AppConfig.getInstance(flavorName: AppFlavor.dev.name);
     },
@@ -81,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(400, 800),
-      builder: (_,__) => MaterialApp(
+      builder: (_, __) => MaterialApp(
         builder: (context, child) {
           return child ?? const SizedBox();
         },
