@@ -1,5 +1,5 @@
-name: mvvm_architecture
-description: A new Flutter application with clean architechture
+name: mvvm_architechture
+description: A new Flutter application with mvvm architechture
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -38,39 +38,40 @@ dependencies:
   equatable: ^2.0.3
 
   #Generate library
-  json_serializable: ^6.2.0
-  json_annotation: ^4.5.0
+  json_serializable: ^6.3.1
+  json_annotation: ^4.6.0
 
   #Localization library
-  sheet_loader_localization: ^0.0.8
+  sheet_loader_localization: 0.0.8
   easy_localization: ^3.0.1
   easy_localization_loader: ^1.0.0
 
-  #Linter library
-  flutter_lints: ^2.0.1
-
   #Firebase library
-  firebase_analytics: ^9.1.8
-  firebase_crashlytics: ^2.8.0
+  firebase_analytics: ^9.2.0
+  firebase_crashlytics: ^2.8.5
+  firebase_core: ^1.19.2
 
   #Storage library
   shared_preferences: ^2.0.15
-  path_provider: ^2.0.10
+  path_provider: ^2.0.11
 
   #UI library
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
   cached_network_image: ^3.2.1
   flutter_svg: ^1.0.3
-  flutter_screenutil: ^5.5.3+1
+  flutter_screenutil: ^5.5.3+2
   pull_to_refresh: ^2.0.0
-  change_app_package_name: ^1.0.0
+  change_app_package_name: ^1.1.0
 
 dev_dependencies:
-  build_runner: ^2.1.11
+  build_runner: ^2.2.0
   flutter_gen_runner:
   retrofit_generator: ^4.0.1
   flutter_test:
     sdk: flutter
+  dart_code_metrics: ^4.16.0
+  flutter_lints: ^2.0.1
+  import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
