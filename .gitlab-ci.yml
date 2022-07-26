@@ -37,8 +37,7 @@ test:
   <<: *mobileBeforeScript
 
   script:
-    - flutter format . --set-exit-if-changed
-    - flutter analyze
+    - sh scripts/.code_analyze.sh
   only:
     - /^bugfix/.*$/
     - /^feature/.*$/
@@ -68,12 +67,11 @@ diawi_android_dev: #Job name
   <<: *mobileBeforeScript
 
   script:
-    - sh .setup_env_gradle.sh
+    - sh scripts/.setup_env_gradle.sh
     - export BUILD_FLAVOR="Dev"
     - export BUILD_FLAVOR_KEY="dev"
-    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
-    - sh .setup_fastlane.sh
-#    - sh .build_android.sh $BUILD_FLAVOR_KEY
+    - sh scripts/.setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh scripts/.setup_fastlane.sh
     - bundle exec fastlane buildAndroid --env $BUILD_FLAVOR_KEY
 
   tags:
@@ -108,11 +106,11 @@ diawi_android_staging: #Job name
 
   script:
     # These step is set-up for distribute to slack app and google chat
-    - sh .setup_env_gradle.sh
+    - sh scripts/.setup_env_gradle.sh
     - export BUILD_FLAVOR="Staging"
     - export BUILD_FLAVOR_KEY="staging"
-    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
-    - sh .setup_fastlane.sh
+    - sh scripts/.setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh scripts/.setup_fastlane.sh
     - bundle exec fastlane buildAndroid --env $BUILD_FLAVOR_KEY
 
   artifacts:
@@ -135,7 +133,7 @@ firebase_android_staging:
     - diawi_android_staging
   script:
     - export BUILD_FLAVOR_KEY="staging"
-    - sh .setup_fastlane.sh
+    - sh scripts/.setup_fastlane.sh
     - bundle exec fastlane distribute --env $BUILD_FLAVOR_KEY
   tags:
     - macmini-2014
@@ -168,8 +166,8 @@ diawi_ios_dev: #Job name
   script:
     - export BUILD_FLAVOR="Dev"
     - export BUILD_FLAVOR_KEY="dev"
-    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
-    - sh .setup_fastlane.sh
+    - sh scripts/.setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh scripts/.setup_fastlane.sh
     - bundle exec fastlane ios buildIOS --env $BUILD_FLAVOR_KEY --verbose
 
   tags:
@@ -205,8 +203,8 @@ testflight_staging: #Job name
   script:
     - export BUILD_FLAVOR="Staging"
     - export BUILD_FLAVOR_KEY="staging"
-    - sh .setup_env_config.sh $BUILD_FLAVOR_KEY
-    - sh .setup_fastlane.sh
+    - sh scripts/.setup_env_config.sh $BUILD_FLAVOR_KEY
+    - sh scripts/.setup_fastlane.sh
     - bundle exec fastlane ios testFlightDistribute --env $BUILD_FLAVOR_KEY --verbose
 
   tags:
